@@ -8,7 +8,7 @@ class Move
                   'spock' => ['rock', 'scissors'] }
 
   def initialize(choice)
-    @choice = Implement.new(choice)
+    @choice = Items.new(choice)
   end
 
   def >(other_move)
@@ -24,7 +24,7 @@ class Move
   end
 end
 
-class Implement
+class Items
   attr_accessor :name, :beats
 
   def initialize(value)
@@ -101,14 +101,13 @@ class Score
     puts ""
   end
 
-  def human_win(name)
+  def player_win(name)
     puts "#{name} won!"
-    @human += 1
-  end
-
-  def computer_win(name)
-    puts "#{name} won!"
-    @computer += 1
+    if Computer::ROBOT_PREF.keys.include?(name)
+      @computer += 1
+    else
+      @human += 1
+    end
   end
 
   def final_winner?
@@ -130,18 +129,16 @@ class RPSGame
     puts ""
   end
 
-  def display_goodbye_message
-    puts "Thanks for playing Rock, Paper, Scissors, Spock, Lizard. Good bye!"
+  def display_moves
+    puts "#{human.name} chose #{human.move}"
+    puts "#{computer.name} chose #{computer.move}"
   end
 
   def display_winner
-    puts "#{human.name} chose #{human.move}"
-    puts "#{computer.name} chose #{computer.move}"
-
     if human.move > computer.move
-      score.human_win(human.name)
+      score.player_win(human.name)
     elsif human.move < computer.move
-      score.computer_win(computer.name)
+      score.player_win(computer.name)
     else
       puts "It's a tie!"
     end
@@ -169,29 +166,34 @@ class RPSGame
     return true if answer.downcase == 'y'
   end
 
-  def display_final_score
+  def display_goodbye
     if score.human == 10
       puts "#{human.name} wins with 10 points!"
     elsif score.computer == 10
       puts "#{computer.name} wins with 10 points!"
     end
+    puts ""
+    puts "Thanks for playing Rock, Paper, Scissors, Spock, Lizard. Good bye!"
+  end
+
+  def display_status
+    system 'clear'
+    score.display(human.name, computer.name)
+    display_move_hx
   end
 
   def play
     display_welcome_message
 
     loop do
-      system 'clear'
-      score.display(human.name, computer.name)
-      display_move_hx
+      display_status
       human.choose
       computer.choose
+      display_moves
       display_winner
-      break if score.final_winner?
-      break unless play_again?
+      break if score.final_winner? || !play_again?
     end
-    display_final_score
-    display_goodbye_message
+    display_goodbye
   end
 end
 
