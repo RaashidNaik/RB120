@@ -25,6 +25,8 @@ class Move
 end
 
 class Items
+  # This class will create a rock, paper, scissors, lizard or spock object
+  # depending on the player's selection.
   attr_accessor :name, :beats
 
   def initialize(value)
@@ -69,6 +71,12 @@ class Human < Player
 end
 
 class Computer < Player
+  # The ROBOT_PREF hash assigns different selection personalities for each
+  # computer name. The values in the array correspond to their preference for
+  # [rock, paper, scissors, lizard, spock] respectively. For example
+  # [1, 0, 0, 0, 0] will only select rock. The higher the value, the more
+  # likely the item will be selected. Values must be >= 0 and the sum of all
+  # values must be >= 1.
   ROBOT_PREF = {  'R2D2' => [1, 1, 1, 1, 1], 'Hal' => [1, 0, 1, 0, 1],
                   'Chappie' => [0, 0, 0, 0, 1], 'Jonny5' => [4, 3, 2, 1, 0] }
   def set_name
