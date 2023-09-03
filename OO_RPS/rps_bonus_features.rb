@@ -134,11 +134,15 @@ class RPSGame
     puts "#{computer.name} chose #{computer.move}"
   end
 
+  def record_score(name)
+    score.player_win(name)
+  end
+
   def display_winner
     if human.move > computer.move
-      score.player_win(human.name)
+      record_score(human.name)
     elsif human.move < computer.move
-      score.player_win(computer.name)
+      record_score(computer.name)
     else
       puts "It's a tie!"
     end
