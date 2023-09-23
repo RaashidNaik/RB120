@@ -1,5 +1,5 @@
 class Move
-  attr_accessor :choice, 
+  attr_accessor :choice
 
   WINNING_MOVES = {  'rock' => ['scissors', 'lizard'],
                   'paper' => ['rock', 'spock'],
