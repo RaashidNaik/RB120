@@ -199,7 +199,7 @@ module Display
 
   def display_final_winner
     if score.human == Score::MAXIMUM_SCORE
-      puts "#{human.name} are the final winner!!"
+      puts "#{human.name} is the final winner!!"
     elsif score.computer == Score::MAXIMUM_SCORE
       puts "#{computer.name} is the final winner!!"
     end
